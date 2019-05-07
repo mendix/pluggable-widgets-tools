@@ -62,6 +62,8 @@ To extend the current webpack configurations and add your own custom features, y
 necessity.
 To extend the current files you can add inside your custom file the following lines:
 
+Please note we have different configurations for web/hybrid and native mobile apps because native mobile doesn't have a preview mode in Mendix Studio Pro. Your preview configuration is related to the file Widget.webmodeler.tsx or .jsx.
+
 For web and hybrid mobile apps
 ```javascript 1.6
 const merge = require("webpack-merge");
