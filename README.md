@@ -47,6 +47,36 @@ npm run mx-script task
 
 `"test:unit": "npm run mx-script test:unit -- --coverage"`
 
-##Notes
+## Notes
 If you are using mono repositories and need to build multiples widgets using Lerna or some other tool, you can provide the option `--subprojectPath` for the tasks `build`, `start` and `release`.
 * Example `"buildSubProject": "npm run mx-script build:ts -- --subProjectPath \"/packages/mysubproject\"`
+
+
+## Webpack extensibility
+To extend the current webpack configurations and add your own custom features, you can create a file inside the root of your project with the files `webpack.config.dev.js` or `webpack.config.prod.js` according to your
+necessity.
+To extends the current files you can add inside your custom file the following lines:
+
+For web and hybrid mobile apps
+```javascript 1.6
+const merge = require("webpack-merge");
+const commonConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.config.common.js");
+
+const customConfig = {
+    devtool: "source-map"
+};
+custom previewConfig = {
+    devtools: "source-map"
+};
+module.exports = [ merge(commonConfig[0], customConfig), merge(commonConfig[1], previewConfig) ];
+```
+For native mobile apps
+```javascript 1.6
+const merge = require("webpack-merge");
+const commonConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.native.config.js");
+
+const customConfig = {
+    devtool: "source-map"
+};
+module.exports = merge(commonConfig, customConfig);
+```
