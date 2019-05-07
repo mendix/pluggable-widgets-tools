@@ -55,7 +55,7 @@ If you are using mono repositories and need to build multiples widgets using Ler
 ## Webpack extensibility
 To extend the current webpack configurations and add your own custom features, you can create a file inside the root of your project with the files `webpack.config.dev.js` or `webpack.config.prod.js` according to your
 necessity.
-To extends the current files you can add inside your custom file the following lines:
+To extend the current files you can add inside your custom file the following lines:
 
 For web and hybrid mobile apps
 ```javascript 1.6
