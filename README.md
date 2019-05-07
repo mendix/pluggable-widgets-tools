@@ -60,7 +60,7 @@ To extends the current files you can add inside your custom file the following l
 For web and hybrid mobile apps
 ```javascript 1.6
 const merge = require("webpack-merge");
-const commonConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.config.dev.js"); //Can also be webpack.config.prod.js
+const baseConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.config.dev.js"); //Can also be webpack.config.prod.js
 
 const customConfig = {
     // Custom configuration goes here
@@ -71,17 +71,17 @@ const previewConfig = {
     devtool: "source-map"
 };
 
-module.exports = [merge(commonConfig[0], customConfig), merge(commonConfig[1], previewConfig)];
+module.exports = [merge(baseConfig[0], customConfig), merge(baseConfig[1], previewConfig)];
 ```
 For native mobile apps
 ```javascript 1.6
 const merge = require("webpack-merge");
-const commonConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.native.config.js");
+const baseConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.native.config.js");
 
 const customConfig = {
     // Custom configuration goes here
     devtool: "source-map"
 };
 
-module.exports = [merge(commonConfig, customConfig)];
+module.exports = [merge(baseConfig, customConfig)];
 ```
