@@ -84,7 +84,7 @@ function bundle(cb) {
     try {
         const pathWebpack = path.join(newPath, "webpack.config.dev.js");
         if(fs.existsSync(pathWebpack)){
-            config = pathWebpack;
+            config = require(pathWebpack);
             console.log(`Using custom webpack configuration from ${pathWebpack}`);
         }
     } catch(err){
@@ -98,7 +98,7 @@ function productionBundle(cb) {
     try {
         const pathWebpack = path.join(newPath, "webpack.config.prod.js");
         if(fs.existsSync(pathWebpack)){
-            config = pathWebpack;
+            config = require(pathWebpack);
             console.log(`Using custom webpack configuration from ${pathWebpack}`);
         }
     } catch(err) {

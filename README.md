@@ -63,12 +63,14 @@ const merge = require("webpack-merge");
 const commonConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.config.common.js");
 
 const customConfig = {
+    // Custom configuration goes here
     devtool: "source-map"
 };
-custom previewConfig = {
-    devtools: "source-map"
+const previewConfig = {
+    // Custom configuration goes here
+    devtool: "source-map"
 };
-module.exports = [ merge(commonConfig[0], customConfig), merge(commonConfig[1], previewConfig) ];
+module.exports = [merge(commonConfig[0], customConfig), merge(commonConfig[1], previewConfig)];
 ```
 For native mobile apps
 ```javascript 1.6
@@ -76,6 +78,7 @@ const merge = require("webpack-merge");
 const commonConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.native.config.js");
 
 const customConfig = {
+    // Custom configuration goes here
     devtool: "source-map"
 };
 module.exports = merge(commonConfig, customConfig);
