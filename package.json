@@ -1,6 +1,6 @@
 {
   "name": "@mendix/pluggable-widgets-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Mendix Pluggable Widgets Tools",
   "license": "Apache-2.0",
   "copyright": "Mendix 2019",
@@ -41,7 +41,7 @@
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "@mendix/pluggable-widgets-api": "^0.1.0",
-    "@mendix/pluggable-widgets-typing-generator": "^0.1.0",
+    "@mendix/pluggable-widgets-typing-generator": "^0.1.1",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@typescript-eslint/parser": "^1.6.0",
     "babel-eslint": "^10.0.1",

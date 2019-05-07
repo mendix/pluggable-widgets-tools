@@ -1,4 +1,9 @@
-## Pluggable Widgets Tools
+# Pluggable Widgets Tools
+ ![npm version](https://badge.fury.io/js/%40mendix%2Fpluggable-widgets-tools.svg) ![Mendix 8](https://img.shields.io/badge/mendix-8.0.0-brightgreen.svg)
+
+![NPM](https://nodei.co/npm/@mendix/pluggable-widgets-tools.svg?downloads=true&stars=true)
+
+## About
 Library to build, test, format, run, release and lint your Pluggable Widget
 
 ## How to install
@@ -47,6 +52,43 @@ npm run mx-script task
 
 `"test:unit": "npm run mx-script test:unit -- --coverage"`
 
-##Notes
+## Notes
 If you are using mono repositories and need to build multiples widgets using Lerna or some other tool, you can provide the option `--subprojectPath` for the tasks `build`, `start` and `release`.
 * Example `"buildSubProject": "npm run mx-script build:ts -- --subProjectPath \"/packages/mysubproject\"`
+
+
+## Webpack extensibility
+To extend the current webpack configurations and add your own custom features, you can create a file inside the root of your project with the files `webpack.config.dev.js` or `webpack.config.prod.js` according to your
+necessity.
+To extend the current files you can add inside your custom file the following lines:
+
+Please note we have different configurations for web/hybrid and native mobile apps because native mobile doesn't have a preview mode in Mendix Studio Pro. Your preview configuration is related to the file Widget.webmodeler.tsx or .jsx.
+
+For web and hybrid mobile apps
+```javascript 1.6
+const merge = require("webpack-merge");
+const baseConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.config.dev.js"); //Can also be webpack.config.prod.js
+
+const customConfig = {
+    // Custom configuration goes here
+    devtool: "source-map"
+};
+const previewConfig = {
+    // Custom configuration goes here
+    devtool: "source-map"
+};
+
+module.exports = [merge(baseConfig[0], customConfig), merge(baseConfig[1], previewConfig)];
+```
+For native mobile apps
+```javascript 1.6
+const merge = require("webpack-merge");
+const baseConfig = require("./node_modules/@mendix/pluggable-widgets-tools/configs/webpack.native.config.js");
+
+const customConfig = {
+    // Custom configuration goes here
+    devtool: "source-map"
+};
+
+module.exports = [merge(baseConfig, customConfig)];
+```

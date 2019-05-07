@@ -1,5 +1,6 @@
 "use strict";
 
+const fs = require('fs');
 const path = require("path");
 const zip = require("gulp-zip");
 const gulp = require("gulp");
@@ -79,13 +80,29 @@ function runWebpack(config, cb) {
 }
 
 function bundle(cb) {
-    const config = require(path.join(cwd, "../configs/webpack.native.config"));
+    let config = require(path.join(cwd, "../configs/webpack.native.config"));
+    try {
+        const pathWebpack = path.join(newPath, "webpack.config.dev.js");
+        if(fs.existsSync(pathWebpack)){
+            config = require(pathWebpack);
+            console.log(`Using custom webpack configuration from ${pathWebpack}`);
+        }
+    } catch(err){
+    }
     runWebpack(config, cb);
 }
 
 function productionBundle(cb) {
-    const config = require(path.join(cwd, "../configs/webpack.native.config"));
+    let config = require(path.join(cwd, "../configs/webpack.native.config"));
     config[0].mode = "production";
+    try {
+        const pathWebpack = path.join(newPath, "webpack.config.prod.js");
+        if(fs.existsSync(pathWebpack)){
+            config = require(pathWebpack);
+            console.log(`Using custom webpack configuration from ${pathWebpack}`);
+        }
+    } catch(err) {
+    }
     runWebpack(config, cb);
 }
 
