@@ -44,7 +44,7 @@ const nativeConfig = {
         "enzyme-to-json/serializer"
     ],
     testMatch: [
-        "<rootDir>/src/components/**/?(*.)(spec|test).[jt]s?(x)"
+        "<rootDir>/src/**/?(*.)(spec|test).[jt]s?(x)"
     ],
     testPathIgnorePatterns: [
         "<rootDir>/dist",

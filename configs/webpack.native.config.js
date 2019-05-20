@@ -1,43 +1,25 @@
-const fs = require('fs')
+"use strict";
+
 const webpack = require("webpack");
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const variables = require("./variables");
 
-const args = process.argv.slice(2);
-const indexOf = args.indexOf("--subprojectPath");
-let pathToJoin = "";
-if(indexOf > -1 && args.length > indexOf+1){
-    pathToJoin = args[indexOf+1];
-}
-
-const newPath = path.join(process.cwd(), "../../../../", pathToJoin);
-
-const pkg = require(path.join(newPath, "package.json"));
-
-const packagePath = pkg.packagePath.replace(/\./g, "\/");
-const widgetName = pkg.widgetName;
+const packagePath = variables.package.packagePath.replace(/\./g, "\/");
+const widgetName = variables.package.widgetName;
 const name = widgetName.toLowerCase();
-let extension = "tsx";
-
-try {
-    if(!fs.existsSync(path.join(newPath, `/src/${widgetName}.${extension}`))){
-        extension = "jsx";
-    }
-} catch(err) {
-    extension = "jsx";
-}
 
 const widgetConfig = {
-    entry: path.join(newPath, `/src/${widgetName}.${extension}`),
+    entry: path.join(variables.path, `/src/${widgetName}.${variables.extension}`),
     output: {
-        path: path.join(newPath, "/dist/tmp"),
+        path: path.join(variables.path, "/dist/tmp"),
         filename: `widgets/${packagePath}/${name}/${widgetName}.js`,
         libraryTarget: "commonjs2"
     },
     resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
         alias: {
-            "tests": `${newPath}/tests`
+            "tests": `${variables.path}/tests`
         }
     },
     module: {
@@ -96,15 +78,14 @@ const widgetConfig = {
         "react-native-webview",
         function(context, request, callback) {
             if (/^@mendix\/pluggable-widgets-api\/components\//.test(request)){
-                let correctPath = request.replace("@mendix/pluggable-widgets-api/components/native", "mendix/components"); //WORKAROUND for RC b1
-                return callback(null, correctPath.replace("@mendix/pluggable-widgets-api/components", "mendix/components"));
+                return callback(null, request.replace("@mendix/pluggable-widgets-api/components", "mendix/components"));
             }
             callback();
         }
     ],
     plugins: [
         new CopyWebpackPlugin([
-            { from: `${newPath}/src/**/*.xml`, toType: "template", to: `widgets/[name].[ext]` }
+            { from: `${variables.path}/src/**/*.xml`, toType: "template", to: `widgets/[name].[ext]` }
         ], {
             copyUnmodified: true
         }),

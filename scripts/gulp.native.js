@@ -10,59 +10,61 @@ const gulpSlash = require("gulp-slash");
 const typingGenerator = require("@mendix/pluggable-widgets-typing-generator");
 
 const cwd = process.cwd();
-const args = process.argv.slice(2);
-const indexOf = args.indexOf("--subprojectPath");
-let pathToJoin = "";
-if(indexOf > -1 && args.length > indexOf+1){
-    pathToJoin = args[indexOf+1];
-}
+const variables = require("../configs/variables");
+const COLOR = {
+    BLACK: '\x1b[30m',
+    RED: '\x1b[31m',
+    GREEN: '\x1b[32m',
+    YELLOW: '\x1b[33m',
+    BLUE: '\x1b[34m',
+    MAGENTA: '\x1b[35m',
+    CYAN: '\x1b[36m',
+    WHITE: '\x1b[37m'
+};
+const END = '\x1b[0m';
 
-const newPath = path.join(__dirname, "../../../../", pathToJoin);
-
-const pkg = require(path.join(newPath, "package.json"));
-
-const projectPath = pkg.config.projectPath ? fixSlashes(checkPath(pkg.config.projectPath)) : fixSlashes(path.join(__dirname, `${newPath}/dist/MxTestProject`));
+const projectPath = variables.package.config.projectPath ? fixSlashes(checkPath(variables.package.config.projectPath)) : fixSlashes(path.join(__dirname, `${variables.path}/dist/MxTestProject`));
 
 const widgetsFolder = fixSlashes(path.join(projectPath, "/widgets/"));
 
 function fixSlashes(tmpPath) {
     tmpPath = gulpSlash(tmpPath);
-    tmpPath = tmpPath.replace(/\/+/g, "/")
+    tmpPath = tmpPath.replace(/\/+/g, "/");
     tmpPath = tmpPath.replace(/\\\\/g, "\\");
     return gulpSlash(tmpPath);
 }
 
 function checkPath(newProjectPath) {
     if (newProjectPath.indexOf('../') !== -1 || newProjectPath.indexOf('./') !== -1) {
-        return path.join(newPath, newProjectPath);
+        return path.join(variables.path, newProjectPath);
     }
     return newProjectPath;
 }
 
 function clean() {
     return del([
-        fixSlashes(`${newPath}/dist/${pkg.version}/*.*`),
-        fixSlashes(`${newPath}/dist/tmp/**/*.*`),
-        fixSlashes(`${newPath}/dist/tsc/**/*.*`),
-        fixSlashes(`${newPath}/dist/testresults/**/*.*`),
+        fixSlashes(`${variables.path}/dist/${variables.package.version}/*.*`),
+        fixSlashes(`${variables.path}/dist/tmp/**/*.*`),
+        fixSlashes(`${variables.path}/dist/tsc/**/*.*`),
+        fixSlashes(`${variables.path}/dist/testresults/**/*.*`),
         fixSlashes(`${projectPath}/deployment/web/widgets/*.*`),
-        fixSlashes(`${widgetsFolder}/${pkg.packagePath}.${pkg.widgetName}.mpk`)
+        fixSlashes(`${widgetsFolder}/${variables.package.packagePath}.${variables.package.widgetName}.mpk`),
     ], { force: true });
 }
 
 function createMpkFile() {
     return gulp
-        .src(fixSlashes(`${newPath}/dist/tmp/widgets/**/*`))
-        .pipe(zip(`${pkg.packagePath}.${pkg.widgetName}.mpk`))
+        .src(fixSlashes(`${variables.path}/dist/tmp/widgets/**/*`))
+        .pipe(zip(`${variables.package.packagePath}.${variables.package.widgetName}.mpk`))
         .pipe(gulp.dest(widgetsFolder))
-        .pipe(gulp.dest(fixSlashes(`${newPath}/dist/${pkg.version}`)))
+        .pipe(gulp.dest(fixSlashes(`${variables.path}/dist/${variables.package.version}`)))
         .on("error", handleError);
 }
 
 function copyToDeployment() {
-    console.log(`Files generated in dist and ${projectPath} folder`);
+    console.log(`${COLOR.GREEN}Files generated in dist and ${projectPath} folder${END}`);
     return gulp
-        .src(fixSlashes(`${newPath}/dist/tmp/widgets/**/*`))
+        .src(fixSlashes(`${variables.path}/dist/tmp/widgets/**/*`))
         .pipe(gulp.dest(fixSlashes(`${projectPath}/deployment/web/widgets`)))
         .on("error", handleError);
 }
@@ -82,12 +84,13 @@ function runWebpack(config, cb) {
 function bundle(cb) {
     let config = require(path.join(cwd, "../configs/webpack.native.config"));
     try {
-        const pathWebpack = path.join(newPath, "webpack.config.dev.js");
+        const pathWebpack = path.join(variables.path, "webpack.config.dev.js");
         if(fs.existsSync(pathWebpack)){
             config = require(pathWebpack);
-            console.log(`Using custom webpack configuration from ${pathWebpack}`);
+            console.log(`${COLOR.MAGENTA}Using custom webpack configuration from ${pathWebpack}${END}`);
         }
     } catch(err){
+        handleError("Wrong configuration found at webpack.config.dev.js. Technical error: "+err.toString());
     }
     runWebpack(config, cb);
 }
@@ -96,19 +99,20 @@ function productionBundle(cb) {
     let config = require(path.join(cwd, "../configs/webpack.native.config"));
     config[0].mode = "production";
     try {
-        const pathWebpack = path.join(newPath, "webpack.config.prod.js");
+        const pathWebpack = path.join(variables.path, "webpack.config.prod.js");
         if(fs.existsSync(pathWebpack)){
             config = require(pathWebpack);
-            console.log(`Using custom webpack configuration from ${pathWebpack}`);
+            console.log(`${COLOR.MAGENTA}Using custom webpack configuration from ${pathWebpack}${END}`);
         }
     } catch(err) {
+        handleError("Wrong configuration found at webpack.config.prod.js. Technical error: "+err.toString());
     }
     runWebpack(config, cb);
 }
 
 function checkDependencies(cb) {
     require("check-dependencies").sync({
-        packageDir: path.join(newPath, "package.json"),
+        packageDir: path.join(variables.path, "package.json"),
         scopeList: ["devDependencies"],
         install: true
     });
@@ -117,34 +121,34 @@ function checkDependencies(cb) {
 
 function generateTypings() {
     return gulp
-        .src(fixSlashes(path.join(newPath, `/src/${pkg.widgetName}.xml`)))
-        .pipe(typingGenerator({ widgetName: pkg.widgetName, isNative: true }))
-        .pipe(gulp.dest(fixSlashes(path.join(newPath, "/typings"))))
+        .src(fixSlashes(path.join(variables.path, `/src/${variables.package.widgetName}.xml`)))
+        .pipe(typingGenerator({ widgetName: variables.package.widgetName, isNative: true }))
+        .pipe(gulp.dest(fixSlashes(path.join(variables.path, "/typings"))))
         .on("error", handleError);
 }
 
 function handleError(err) {
-    console.log(err.toString())
-    process.exit(-1)
+    console.log(`${COLOR.RED}${err.toString()}${END}`);
+    process.exit(-1);
 }
 
 const build = gulp.series(clean, checkDependencies, bundle, createMpkFile, copyToDeployment);
 
-const productionBuild = gulp.series(clean, checkDependencies, productionBundle, createMpkFile, copyToDeployment);
+const productionBuild = gulp.series(clean, checkDependencies, productionBundle, createMpkFile);
 
 const buildTs = gulp.series(clean, generateTypings, checkDependencies, bundle, createMpkFile, copyToDeployment);
 
-const productionBuildTs = gulp.series(clean, generateTypings, checkDependencies, productionBundle, createMpkFile, copyToDeployment);
+const productionBuildTs = gulp.series(clean, generateTypings, checkDependencies, productionBundle, createMpkFile);
 
 function watch() {
-    const watchPath = fixSlashes(`${newPath}/src/**/*`);
-    console.log("Watching files in: ", watchPath);
+    const watchPath = fixSlashes(`${variables.path}/src/**/*`);
+    console.log(`${COLOR.GREEN}Watching files in: ${watchPath}${END}`);
     return gulp.watch(watchPath, { ignoreInitial: false }, build);
 }
 
 function watchTs() {
-    const watchPath = fixSlashes(`${newPath}/src/**/*`);
-    console.log("Watching files in: ", watchPath);
+    const watchPath = fixSlashes(`${variables.path}/src/**/*`);
+    console.log(`${COLOR.GREEN}Watching files in: ${watchPath}${END}`);
     return gulp.watch(watchPath, { ignoreInitial: false }, buildTs);
 }
 

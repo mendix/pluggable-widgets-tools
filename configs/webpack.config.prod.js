@@ -1,28 +1,17 @@
 "use strict";
 
-const path = require("path");
 const commonConfig = require("./webpack.config.common");
 const merge = require("webpack-merge");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const variables = require("./variables");
 
-const args = process.argv.slice(2);
-const indexOf = args.indexOf("--subprojectPath");
-let pathToJoin = "";
-if(indexOf > -1 && args.length > indexOf+1){
-    pathToJoin = args[indexOf+1];
-}
-
-const newPath = path.join(__dirname, "../../../../", pathToJoin);
-
-const pkg = require(path.join(newPath, "package.json"));
-
-const packagePath = pkg.packagePath.replace(/\./g, "\/");
-const widgetName = pkg.widgetName;
+const packagePath = variables.package.packagePath.replace(/\./g, "\/");
+const widgetName = variables.package.widgetName;
 const name = widgetName.toLowerCase();
 
 const prodConfig = {
     mode: "production",
-    devtool: false,
+    devtool: "source-map",
     plugins: [
         new ExtractTextPlugin({
             filename: `./widgets/${packagePath}/${name}/ui/${widgetName}.css`

@@ -1,26 +1,15 @@
 "use strict";
 
-const path = require("path");
 const commonConfig = require("./webpack.config.common");
 const merge = require("webpack-merge");
+const variables = require("./variables");
 
-const args = process.argv.slice(2);
-const indexOf = args.indexOf("--subprojectPath");
-let pathToJoin = "";
-if(indexOf > -1 && args.length > indexOf+1){
-    pathToJoin = args[indexOf+1];
-}
-
-const newPath = path.join(__dirname, "../../../../", pathToJoin);
-
-const pkg = require(path.join(newPath, "package.json"));
-
-const packagePath = pkg.packagePath.replace(/\./g, "\/");
-const widgetName = pkg.widgetName;
+const packagePath = variables.package.packagePath.replace(/\./g, "\/");
+const widgetName = variables.package.widgetName;
 const name = widgetName.toLowerCase();
 
-const mxHost = process.env.npm_package_config_mendixHost || pkg.config.mendixHost || "http://localhost:8080";
-const developmentPort = process.env.npm_package_config_developmentPort || pkg.config.developmentPort || "3000";
+const mxHost = process.env.npm_package_config_mendixHost || variables.package.config.mendixHost || "http://localhost:8080";
+const developmentPort = process.env.npm_package_config_developmentPort || variables.package.config.developmentPort || "3000";
 
 const devConfig = {
     mode: "development",

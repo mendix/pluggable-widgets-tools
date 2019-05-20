@@ -1,76 +1,95 @@
 {
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es6": true,
-        "jest/globals": true
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jest/globals": true
+  },
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "createElement",
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "settings": {
-        "react": {
-            "createClass": "createReactClass",
-            "pragma": "createElement",
-            "version": "detect"
-        }
-    },
-    "extends": [
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
-        "prettier/@typescript-eslint",
-        "plugin:prettier/recommended"
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "jest"
+  ],
+  "rules": {
+    "linebreak-style": [
+      "error",
+      "unix"
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint",
-        "react",
-        "jest"
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "createElement"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "createElement"
+      }
+    ],
+    "react/prop-types": "off",
+    "react/no-deprecated": "warn",
+    "react/jsx-uses-vars": "error",
+    "react/jsx-uses-react": "off",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/no-object-literal-type-assertion": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/array-type": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn",
+      {
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true
+      }
+    ]
+  },
+  "overrides": {
+    "files": [
+      "webpack.config.dev.js",
+      "webpack.config.prod.js",
+      "prettier.config.js",
+      "*.webmodeler.*",
+      ".eslintrc.js"
     ],
     "rules": {
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-unused-vars": [
-            "error",
-            {
-                "varsIgnorePattern": "createElement"
-            }
-        ],
-        "@typescript-eslint/no-unused-vars": [
-            "error",
-            {
-                "varsIgnorePattern": "createElement"
-            }
-        ],
-        "react/prop-types": "off",
-        "react/no-deprecated": "warn",
-        "react/jsx-uses-vars": "error",
-        "react/jsx-uses-react": "off",
-        "jest/no-disabled-tests": "warn",
-        "jest/no-focused-tests": "error",
-        "jest/no-identical-title": "error",
-        "jest/prefer-to-have-length": "warn",
-        "jest/valid-expect": "error",
-        "@typescript-eslint/indent": "off",
-        "@typescript-eslint/explicit-member-accessibility": "off",
-        "@typescript-eslint/no-object-literal-type-assertion": "off",
-        "@typescript-eslint/no-use-before-define": "off",
-        "@typescript-eslint/array-type": "warn",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/explicit-function-return-type": [ "warn", { "allowExpressions": true }]
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/class-name-casing": "off"
     }
+  }
 }
