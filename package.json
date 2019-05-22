@@ -1,6 +1,6 @@
 {
   "name": "@mendix/pluggable-widgets-tools",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Mendix Pluggable Widgets Tools",
   "license": "Apache-2.0",
   "copyright": "Mendix 2019",
@@ -29,7 +29,8 @@
     "bin",
     "scripts",
     "configs",
-    "test-config"
+    "test-config",
+    "npm-shrinkwrap.json"
   ],
   "bin": {
     "@mendix/pluggable-widgets-tools": "bin/mx-scripts.js"
@@ -98,6 +99,7 @@
     "output": "../../../dist/testresults/TESTS-Jest.xml"
   },
   "scripts": {
+    "prepublishOnly": "npm install && npm shrinkwrap",
     "start:server": "webpack-dev-server --config configs/webpack.config.js --env=dev --hot --quiet",
     "start:js": "npm run dev:js",
     "start:ts": "npm run dev:ts",
