@@ -64,6 +64,7 @@ const widgetConfig = {
     devtool: false,
     bail: true,
     externals: [
+        /^mendix\//,
         "react",
         "react-dom",
         "react-native",
@@ -75,13 +76,7 @@ const widgetConfig = {
         "react-native-vector-icons",
         "react-native-video",
         "react-native-view-shot",
-        "react-native-webview",
-        function(context, request, callback) {
-            if (/^@mendix\/pluggable-widgets-api\/components\//.test(request)){
-                return callback(null, request.replace("@mendix/pluggable-widgets-api/components", "mendix/components"));
-            }
-            callback();
-        }
+        "react-native-webview"
     ],
     plugins: [
         new CopyWebpackPlugin([

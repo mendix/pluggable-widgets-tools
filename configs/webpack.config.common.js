@@ -50,15 +50,9 @@ const widgetConfig = {
         ]
     },
     externals: [
+        /^mendix\//,
         "react",
-        "react-dom",
-        function(context, request, callback) {
-            if (/^@mendix\/pluggable-widget-api\/components\//.test(request)){
-                let correctPath = request.replace("@mendix/pluggable-widgets-api/components/web", "mendix/components"); //WORKAROUND for RC b1
-                return callback(null, correctPath.replace("@mendix/pluggable-widgets-api/components", "mendix/components"));
-            }
-            callback();
-        }
+        "react-dom"
     ],
     plugins: [
         new CopyWebpackPlugin(
@@ -112,14 +106,9 @@ const previewConfig = {
         ]
     },
     externals: [
+        /^mendix\//,
         "react",
-        "react-dom",
-        function(context, request, callback) {
-            if (/^@mendix\/pluggable-widgets-api\/components\//.test(request)){
-                return callback(null, request.replace("@mendix/pluggable-widgets-api/components", "mendix/components"));
-            }
-            callback();
-        }
+        "react-dom"
     ]
 };
 
