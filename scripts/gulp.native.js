@@ -121,9 +121,8 @@ function checkDependencies(cb) {
 
 function generateTypings() {
     return gulp
-        .src(fixSlashes(path.join(variables.path, `/src/${variables.package.widgetName}.xml`)))
-        .pipe(typingGenerator({ widgetName: variables.package.widgetName, isNative: true }))
-        .pipe(gulp.dest(fixSlashes(path.join(variables.path, "/typings"))))
+        .src(fixSlashes(path.join(variables.path, `/src/package.xml`)))
+        .pipe(typingGenerator())
         .on("error", handleError);
 }
 
