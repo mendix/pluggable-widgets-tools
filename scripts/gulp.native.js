@@ -47,7 +47,6 @@ function clean() {
         fixSlashes(`${variables.path}/dist/tmp/**/*.*`),
         fixSlashes(`${variables.path}/dist/tsc/**/*.*`),
         fixSlashes(`${variables.path}/dist/testresults/**/*.*`),
-        fixSlashes(`${projectPath}/deployment/native/widgets/*.*`),
         fixSlashes(`${widgetsFolder}/${variables.package.packagePath}.${variables.package.widgetName}.mpk`),
     ], { force: true });
 }
