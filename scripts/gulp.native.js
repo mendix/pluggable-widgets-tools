@@ -47,7 +47,7 @@ function clean() {
         fixSlashes(`${variables.path}/dist/tmp/**/*.*`),
         fixSlashes(`${variables.path}/dist/tsc/**/*.*`),
         fixSlashes(`${variables.path}/dist/testresults/**/*.*`),
-        fixSlashes(`${projectPath}/deployment/web/widgets/*.*`),
+        fixSlashes(`${projectPath}/deployment/native/widgets/*.*`),
         fixSlashes(`${widgetsFolder}/${variables.package.packagePath}.${variables.package.widgetName}.mpk`),
     ], { force: true });
 }
@@ -65,7 +65,7 @@ function copyToDeployment() {
     console.log(`${COLOR.GREEN}Files generated in dist and ${projectPath} folder${END}`);
     return gulp
         .src(fixSlashes(`${variables.path}/dist/tmp/widgets/**/*`))
-        .pipe(gulp.dest(fixSlashes(`${projectPath}/deployment/web/widgets`)))
+        .pipe(gulp.dest(fixSlashes(`${projectPath}/deployment/native/widgets`)))
         .on("error", handleError);
 }
 
