@@ -69,9 +69,8 @@ const previewDevConfig = {
     devtool: "eval",
     module: {
         rules: [
-            { test: /\.css$/, use: "raw-loader" },
             {
-                test: /\.scss$/, use: [
+                test: /\.s?css$/, use: [
                     { loader: "raw-loader" },
                     { loader: "sass-loader" }
                 ]

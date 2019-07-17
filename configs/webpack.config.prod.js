@@ -32,18 +32,13 @@ const prodConfig = {
 const previewProdConfig = {
     mode: "production",
     devtool: false,
-    plugins: [
-        new ExtractTextPlugin({
-            filename: `./widgets/${packagePath}/${name}/ui/${widgetName}.css`
-        })
-    ],
     module: {
         rules: [
             {
-                test: /\.s?css$/, loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: ["css-loader", "sass-loader"]
-                })
+                test: /\.s?css$/, use: [
+                    { loader: "raw-loader" },
+                    { loader: "sass-loader" }
+                ]
             }
         ]
     }
