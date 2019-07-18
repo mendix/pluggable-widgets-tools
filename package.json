@@ -40,6 +40,7 @@
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
+    "@hot-loader/react-dom": "^16.8.6",
     "@mendix/pluggable-widgets-typing-generator": "^0.1.2",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
@@ -102,7 +103,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm install",
-    "start:server": "webpack-dev-server --config configs/webpack.config.js --env=dev --hot --quiet",
+    "start:server": "webpack-dev-server --config configs/webpack.config.js --env=dev --quiet",
     "start:js": "npm run dev:js",
     "start:ts": "npm run dev:ts",
     "start:js:native": "npm run dev:js:native",

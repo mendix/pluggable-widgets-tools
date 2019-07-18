@@ -3,6 +3,7 @@
 const commonConfig = require("./webpack.config.common");
 const merge = require("webpack-merge");
 const variables = require("./variables");
+const webpack = require("webpack");
 
 const packagePath = variables.package.packagePath.replace(/\./g, "\/");
 const widgetName = variables.package.widgetName;
@@ -37,6 +38,10 @@ const devConfig = {
                 }
             }
         }]
+    },
+    plugins: [new webpack.HotModuleReplacementPlugin()],
+    resolve: {
+        alias: { "react-dom": "@hot-loader/react-dom" }
     },
     module: {
         rules: [

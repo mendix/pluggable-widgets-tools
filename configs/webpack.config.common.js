@@ -12,6 +12,7 @@ const widgetConfig = {
         path: path.join(variables.path, "/dist/tmp"),
         filename: `widgets/${packagePath}/${name}/${widgetName}.js`,
         libraryTarget: "umd",
+        publicPath: "/"
     },
     resolve: {
         extensions: [".ts", ".js", ".tsx", ".jsx"],
