@@ -26,7 +26,10 @@ const prodConfig = {
                 })
             }
         ]
-    }
+    },
+    externals: [
+        "react-dom"
+    ]
 };
 
 const previewProdConfig = {

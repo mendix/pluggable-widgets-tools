@@ -52,8 +52,7 @@ const widgetConfig = {
     },
     externals: [
         /^mendix\//,
-        "react",
-        "react-dom"
+        "react"
     ],
     plugins: [
         new CopyWebpackPlugin(
