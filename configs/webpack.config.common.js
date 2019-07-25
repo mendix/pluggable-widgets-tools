@@ -52,7 +52,8 @@ const widgetConfig = {
     },
     externals: [
         /^mendix\//,
-        "react"
+        "react",
+        "big.js"
     ],
     plugins: [
         new CopyWebpackPlugin(
