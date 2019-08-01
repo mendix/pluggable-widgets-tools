@@ -32,7 +32,7 @@
     "test-config"
   ],
   "bin": {
-    "@mendix/pluggable-widgets-tools": "bin/mx-scripts.js"
+    "pluggable-widgets-tools": "bin/mx-scripts.js"
   },
   "dependencies": {
     "@babel/cli": "^7.4.4",

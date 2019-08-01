@@ -10,13 +10,9 @@ Library to build, test, format, run, release and lint your Pluggable Widget
 Install from npm using `npm install @mendix/pluggable-widgets-tools`
 
 ## How to use
-In your `package.json` include the task:
+In your `package.json` tasks, use the following command with the desired task:
 `
-"mx-script": "cd ./node_modules/@mendix/pluggable-widgets-tools && node bin/mx-scripts.js",
-`
-In your tasks, use the following replacing task with the desired task:
-`
-npm run mx-script task
+pluggable-widgets-tools task
 `
 
 ## Available tasks
@@ -42,19 +38,19 @@ npm run mx-script task
 * `test:e2e:ts` Used to execute End-to-end tests using Wdio in your TypeScript Web Project
 
 ## Examples
-`"start": "npm run mx-script start:server -- --open"` 
+`"start": "pluggable-widgets-tools start:server --open"` 
 
-`"build": "npm run mx-script build:js"`
+`"build": "pluggable-widgets-tools build:js"`
 
-`"lint": "npm run mx-script lint"`
+`"lint": "pluggable-widgets-tools lint"`
 
-`"lint:fix": "npm run mx-script lint:fix"`
+`"lint:fix": "pluggable-widgets-tools lint:fix"`
 
-`"test:unit": "npm run mx-script test:unit -- --coverage"`
+`"test:unit": "pluggable-widgets-tools test:unit --coverage"`
 
 ## Notes
 If you are using mono repositories and need to build multiples widgets using Lerna or some other tool, you can provide the option `--subprojectPath` for the tasks `build`, `start` and `release`.
-* Example `"buildSubProject": "npm run mx-script build:ts -- --subProjectPath \"/packages/mysubproject\"`
+* Example `"buildSubProject": "pluggable-widgets-tools build:ts --subProjectPath \"/packages/mysubproject\"`
 
 
 ## Webpack extensibility

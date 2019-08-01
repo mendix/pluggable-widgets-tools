@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#! /usr/bin/env node
 'use strict';
 
 // Makes the script crash on unhandled rejections instead of silently
@@ -9,6 +9,7 @@ process.on('unhandledRejection', err => {
 });
 
 const spawn = require('child_process').spawnSync;
+const path = require("path");
 const args = process.argv.slice(2);
 const script = args[0];
 const argsFiltered = args.length > 1 ? args.slice(1) : [];
@@ -40,7 +41,7 @@ switch (script) {
     case "release:ts:native":
     {
         console.log(`Running MX Widget Tools script: "${script}" ${argsFiltered.length > 0 ? `with options "${argsFiltered.join(" ")}"`:""}`);
-        executeScript(script)
+        executeScript(script);
         break;
     }
     default:
@@ -49,14 +50,18 @@ switch (script) {
 }
 
 function executeScript(script){
+    const libraryPath = path.join(process.argv[1], "../../@mendix/pluggable-widgets-tools");
+    const spawnParams = {stdio: 'inherit'};
     let args = ["run", script];
-    if(argsFiltered.length > 0){
+    if (argsFiltered.length > 0) {
         args.push("--");
         args = args.concat(argsFiltered);
     }
+    if (libraryPath.endsWith("node_modules/@mendix/pluggable-widgets-tools")) {
+        spawnParams.cwd = libraryPath;
+    }
     const result = spawn(
-        /^win/.test(process.platform) ? 'npm.cmd' : 'npm', args,
-        { stdio: 'inherit' }
+        /^win/.test(process.platform) ? 'npm.cmd' : 'npm', args, spawnParams
     );
     if (result.signal) {
         if (result.signal === 'SIGKILL') {
