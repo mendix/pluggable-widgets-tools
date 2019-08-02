@@ -13,6 +13,7 @@ const path = require("path");
 const args = process.argv.slice(2);
 const script = args[0];
 const argsFiltered = args.length > 1 ? args.slice(1) : [];
+const gulpSlash = require("gulp-slash");
 
 switch (script) {
     case "build:js":
@@ -50,14 +51,14 @@ switch (script) {
 }
 
 function executeScript(script){
-    const libraryPath = path.join(process.argv[1], "../../@mendix/pluggable-widgets-tools");
+    const libraryPath = getLibraryPath();
     const spawnParams = {stdio: 'inherit'};
     let args = ["run", script];
     if (argsFiltered.length > 0) {
         args.push("--");
         args = args.concat(argsFiltered);
     }
-    if (libraryPath.endsWith("node_modules/@mendix/pluggable-widgets-tools")) {
+    if (/.*node_modules[\/|\\]@mendix[\/|\\]pluggable-widgets-tools[\/|\\]?$/.test(libraryPath)) {
         spawnParams.cwd = libraryPath;
     }
     const result = spawn(
@@ -80,4 +81,14 @@ function executeScript(script){
         process.exit(1);
     }
     process.exit(result.status);
+}
+
+function getLibraryPath(){
+    const currentPath = process.argv[1];
+
+    if (currentPath.endsWith("mx-scripts.js")){
+        return gulpSlash(path.join(currentPath, "../../"));
+    }
+    const isBinFolder = currentPath.indexOf(gulpSlash("/node_modules/.bin")) !== -1;
+    return gulpSlash(isBinFolder ? path.join(currentPath, "../../@mendix/pluggable-widgets-tools") : currentPath);
 }
