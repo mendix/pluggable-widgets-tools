@@ -1,7 +1,10 @@
 # Pluggable Widgets Tools
- ![npm version](https://badge.fury.io/js/%40mendix%2Fpluggable-widgets-tools.svg) ![Mendix 8](https://img.shields.io/badge/mendix-8.0.0-brightgreen.svg)
-
-![NPM](https://nodei.co/npm/@mendix/pluggable-widgets-tools.svg?downloads=true&stars=true)
+ ![npm version](https://badge.fury.io/js/%40mendix%2Fpluggable-widgets-tools.svg) 
+ ![Mendix 8](https://img.shields.io/badge/mendix-8.0.0-brightgreen.svg)
+ ![Build Status](https://travis-ci.org/mendix/pluggable-widgets-tools.svg?branch=master)
+ ![npm](https://img.shields.io/npm/dm/@mendix/pluggable-widgets-tools)
+ ![GitHub release](https://img.shields.io/github/release/mendix/pluggable-widgets-tools)
+ ![GitHub issues](https://img.shields.io/github/issues/mendix/pluggable-widgets-tools)
 
 ## About
 Library to build, test, format, run, release and lint your Pluggable Widget
