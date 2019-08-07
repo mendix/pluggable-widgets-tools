@@ -61,7 +61,7 @@ const widgetConfig = {
         ]
     },
     mode: "development",
-    devtool: false,
+    devtool: "source-map",
     bail: true,
     externals: [
         /^mendix\//,

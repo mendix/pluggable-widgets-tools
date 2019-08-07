@@ -50,7 +50,7 @@ pluggable-widgets-tools task
 
 ## Notes
 If you are using mono repositories and need to build multiples widgets using Lerna or some other tool, you can provide the option `--subprojectPath` for the tasks `build`, `start` and `release`.
-* Example `"buildSubProject": "pluggable-widgets-tools build:ts --subProjectPath \"/packages/mysubproject\"`
+* Example `"buildSubProject": "pluggable-widgets-tools build:ts --subprojectPath \"/packages/mysubproject\"`
 
 
 ## Webpack extensibility
@@ -86,5 +86,5 @@ const customConfig = {
     devtool: "source-map"
 };
 
-module.exports = [merge(baseConfig, customConfig)];
+module.exports = [merge(baseConfig[0], customConfig)];
 ```

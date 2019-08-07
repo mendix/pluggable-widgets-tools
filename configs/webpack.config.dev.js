@@ -14,7 +14,7 @@ const developmentPort = process.env.npm_package_config_developmentPort || variab
 
 const devConfig = {
     mode: "development",
-    devtool: "eval",
+    devtool: "source-map",
     devServer: {
         port: developmentPort,
         overlay: {
@@ -71,7 +71,7 @@ const devConfig = {
 
 const previewDevConfig = {
     mode: "development",
-    devtool: "eval",
+    devtool: "inline-source-map",
     module: {
         rules: [
             {
