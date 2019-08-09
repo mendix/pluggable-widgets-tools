@@ -1,6 +1,6 @@
 {
   "name": "@mendix/pluggable-widgets-tools",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "description": "Mendix Pluggable Widgets Tools",
   "license": "Apache-2.0",
   "copyright": "Mendix 2019",
@@ -89,13 +89,14 @@
     "react": "~16.8.6",
     "react-dom": "~16.8.6",
     "react-hot-loader": "^4.8.4",
+    "react-native": "0.59.9",
     "react-test-renderer": "~16.8.6",
-    "react-native": "^0.59.9",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.4",
+    "ts-node": "^8.3.0",
     "typescript": "^3.5.2",
     "url-loader": "^1.1.2",
     "webdriverio": "^5.10.9",
@@ -134,7 +135,8 @@
     "format": "prettier --config \"../../../prettier.config.js\" --write \"../../../{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "test:unit": "jest --projects ./test-config/jest.config.js",
     "test:unit:native": "jest --projects ./test-config/jest.native.config.js",
-    "test:e2e:js": "babel ../../../tests --out-dir ../../../dist/e2e && wdio ./test-config/wdio.conf.js",
-    "test:e2e:ts": "tsc -p ../../../tests/e2e/tsconfig.json && wdio ./test-config/wdio.conf.js"
+    "test:e2e:js": "npm run test:e2e",
+    "test:e2e:ts": "npm run test:e2e",
+    "test:e2e": "wdio ./test-config/wdio.conf.js"
   }
 }

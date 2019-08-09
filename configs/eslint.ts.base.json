@@ -152,17 +152,18 @@
     "jest/prefer-to-have-length": "warn",
     "jest/valid-expect": "error"
   },
-  "overrides": {
+  "overrides": [{
     "files": [
       "webpack.config.dev.js",
       "webpack.config.prod.js",
       "prettier.config.js",
       "*.webmodeler.*",
-      ".eslintrc.js"
+      ".eslintrc.js",
+      "wdio.conf.js"
     ],
     "rules": {
       "@typescript-eslint/no-var-requires": "off",
       "@typescript-eslint/class-name-casing": "off"
     }
-  }
+  }]
 }

@@ -1,10 +1,21 @@
+const path = require("path");
+const fs = require("fs");
 const debug = process.env.DEBUG;
 const url = process.env.URL || "https://localhost:8080/";
 
+const e2ePath = "../../../dist/e2e/";
+if (!fs.existsSync(e2ePath)) {
+    fs.mkdirSync(e2ePath, { recursive: true });
+}
+
 exports.config = {
+    before() {
+        require('@babel/register');
+        require("ts-node").register({ files: true, project: "../../../tests/e2e/tsconfig.json" });
+    },
     host: "127.0.0.1",
     port: 4444,
-    specs: [ "../../../dist/e2e/**/*.spec.js","../../../dist/e2e/**/*.spec.ts" ],
+    specs: [ "../../../tests/e2e/**/*.spec.js","../../../tests/e2e/**/*.spec.ts" ],
     maxInstances: debug ? 1 : 5,
     capabilities: [ {
         maxInstances: debug ? 1 : 5,
@@ -14,7 +25,7 @@ exports.config = {
     logLevel: "silent",
     coloredLogs: true,
     bail: 0,
-    screenshotPath: "../../../dist/e2e/",
+    screenshotPath: e2ePath,
     baseUrl: url,
     waitforTimeout: 30000,
     connectionRetryTimeout: 90000,
@@ -25,14 +36,18 @@ exports.config = {
     execArgv: debug ? [ "--inspect" ] : undefined,
     // Options to be passed to Jasmine.
     jasmineNodeOpts: {
-        defaultTimeoutInterval: debug ? (60 * 60 * 1000) : (30 * 1000),
-        expectationResultHandler: function(passed, assertion) {
-            if (passed) {
-                return;
-            }
-            browser.saveScreenshot(
-                "../../../dist/e2e/assertionError_" + assertion.error.message + ".png"
-            );
+        defaultTimeoutInterval: debug ? 60 * 60 * 1000 : 30 * 1000
+    },
+    afterTest: test => {
+        if (test.passed) {
+            return;
         }
+        const browserName = browser.capabilities.browserName;
+        const timestamp = new Date().toJSON().replace(/:/g, "-");
+        const testName = test.fullName.replace(/ /g, "_");
+        const filename = `TESTFAIL_${browserName}_${testName}_${timestamp}.png`;
+        const filePath = path.join(e2ePath, filename);
+        browser.saveScreenshot(filePath);
+        console.log("Saved screenshot: ", filePath);
     }
 };
