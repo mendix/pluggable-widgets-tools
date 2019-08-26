@@ -63,7 +63,7 @@ function createMpkFile() {
 function copyToDeployment() {
     console.log(`${COLOR.GREEN}Files generated in dist and ${projectPath} folder${END}`);
     return gulp
-        .src(fixSlashes(`${variables.path}/dist/tmp/widgets/**/*`))
+        .src([fixSlashes(`${variables.path}/dist/tmp/widgets/**/*`), "!" + fixSlashes(`${variables.path}/dist/tmp/widgets/**/package.xml`)])
         .pipe(gulp.dest(fixSlashes(`${projectPath}/deployment/native/widgets`)))
         .on("error", handleError);
 }
