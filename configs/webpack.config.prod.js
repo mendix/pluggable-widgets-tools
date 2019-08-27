@@ -53,9 +53,8 @@ const previewProdConfig = {
     module: {
         rules: [
             {
-                test: /\.s?css$/, use: [
-                    { loader: "raw-loader" },
-                    { loader: "sass-loader" }
+                test: /\.(sa|sc|c)ss$/, use: [
+                    "to-string-loader", "css-loader", "sass-loader"
                 ]
             }
         ]
