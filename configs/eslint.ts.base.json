@@ -71,7 +71,7 @@
         "allowTypedFunctionExpressions": true
       }
     ],
-    "@typescript-eslint/array-type": ["error", "array-simple"],
+    "@typescript-eslint/array-type": ["error", { "default": "array-simple" }],
     "@typescript-eslint/explicit-member-accessibility": ["error", { "accessibility": "no-public", "overrides": { "parameterProperties": "explicit" } }],
     "@typescript-eslint/member-ordering": ["error", {
       "default": [
