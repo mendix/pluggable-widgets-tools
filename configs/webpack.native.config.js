@@ -65,6 +65,7 @@ const widgetConfig = {
     bail: true,
     externals: [
         /^mendix\//,
+        "big.js",
         "react",
         "react-dom",
         "react-native",
@@ -76,7 +77,9 @@ const widgetConfig = {
         "react-native-vector-icons",
         "react-native-video",
         "react-native-view-shot",
-        "react-native-webview"
+        "react-native-webview",
+        /react-native-gesture-handler\/*/,
+        "react-navigation"
     ],
     plugins: [
         new CopyWebpackPlugin([
