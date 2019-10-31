@@ -61,11 +61,15 @@ function createMpkFile() {
 }
 
 function copyToDeployment() {
-    console.log(`${COLOR.GREEN}Files generated in dist and ${projectPath} folder${END}`);
-    return gulp
-        .src([fixSlashes(`${variables.path}/dist/tmp/widgets/**/*`), "!" + fixSlashes(`${variables.path}/dist/tmp/widgets/**/package.xml`)])
-        .pipe(gulp.dest(fixSlashes(`${projectPath}/deployment/web/widgets`)))
-        .on("error", handleError);
+    if(fs.existsSync(projectPath) && fs.readdirSync(projectPath).length > 0){
+        console.log(`${COLOR.GREEN}Files generated in dist and ${projectPath} folder${END}`);
+        return gulp
+            .src([fixSlashes(`${variables.path}/dist/tmp/widgets/**/*`), "!" + fixSlashes(`${variables.path}/dist/tmp/widgets/**/package.xml`)])
+            .pipe(gulp.dest(fixSlashes(`${projectPath}/deployment/web/widgets`)))
+            .on("error", handleError);
+    }else{
+        console.log(`${COLOR.YELLOW}Widget is not copied into project because no Mendix Test Project available in ${projectPath}${END}`);
+    }
 }
 
 function runWebpack(config, cb) {
