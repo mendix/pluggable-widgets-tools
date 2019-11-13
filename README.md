@@ -1,5 +1,5 @@
 # Pluggable Widgets Tools
- ![npm version](https://badge.fury.io/js/%40mendix%2Fpluggable-widgets-tools.svg) 
+ ![npm version](https://badge.fury.io/js/%40mendix%2Fpluggable-widgets-tools.svg)
  ![Mendix 8](https://img.shields.io/badge/mendix-8.0.0-brightgreen.svg)
  ![Build Status](https://travis-ci.org/mendix/pluggable-widgets-tools.svg?branch=master)
  ![npm](https://img.shields.io/npm/dm/@mendix/pluggable-widgets-tools)
@@ -41,7 +41,7 @@ pluggable-widgets-tools task
 * `test:e2e:ts` Used to execute End-to-end tests using Wdio in your TypeScript Web Project
 
 ## Examples
-`"start": "pluggable-widgets-tools start:server --open"` 
+`"start": "pluggable-widgets-tools start:server --open"`
 
 `"build": "pluggable-widgets-tools build:js"`
 
@@ -55,6 +55,11 @@ pluggable-widgets-tools task
 If you are using mono repositories and need to build multiples widgets using Lerna or some other tool, you can provide the option `--subprojectPath` for the tasks `build`, `start` and `release`.
 * Example `"buildSubProject": "pluggable-widgets-tools build:ts --subprojectPath \"/packages/mysubproject\"`
 
+If you are using a different folder for your Mendix project (for example, you are developing a widget on Mac OS, but your project is on Windows in Parallels), you can use the environment variable `MX_PROJECT_PATH` to specifiy this. This can either be set when executing the build command, or added to a `.env` file to your widget root directory containing the path. This should look like this:
+
+```text
+MX_PROJECT_PATH="/Volumes/Windows/path/to/your/project"
+```
 
 ## Webpack extensibility
 To extend the current webpack configurations and add your own custom features, you can create a file inside the root of your project with the files `webpack.config.dev.js` or `webpack.config.prod.js` according to your

@@ -23,7 +23,14 @@ const COLOR = {
 };
 const END = '\x1b[0m';
 
-const projectPath = variables.package.config.projectPath ? fixSlashes(checkPath(variables.package.config.projectPath)) : fixSlashes(path.join(__dirname, `${variables.path}/dist/MxTestProject`));
+require('dotenv').config({ path: path.join(variables.path, '.env')  });
+const ENV_PROJECT_PATH = process.env.MX_PROJECT_PATH;
+
+const projectPath = ENV_PROJECT_PATH ?
+    fixSlashes(checkPath(ENV_PROJECT_PATH)) :
+    (variables.package.config.projectPath ?
+        fixSlashes(checkPath(variables.package.config.projectPath)) :
+        fixSlashes(path.join(__dirname, `${variables.path}/dist/MxTestProject`)));
 
 const widgetsFolder = fixSlashes(path.join(projectPath, "/widgets/"));
 
