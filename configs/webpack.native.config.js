@@ -17,7 +17,7 @@ const widgetConfig = {
         libraryTarget: "commonjs2"
     },
     resolve: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: [".native.js", ".js", ".jsx", ".ts", ".tsx"],
         alias: {
             "tests": `${variables.path}/tests`
         }
