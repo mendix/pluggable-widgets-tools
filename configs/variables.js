@@ -24,10 +24,10 @@ try {
 
 try {
     if(!fs.existsSync(path.join(newPath, `/src/${pkg.widgetName}.${preview}.${extension}`))){
-        extension = "webmodeler";
+        preview = "webmodeler";
     }
 } catch(err) {
-    extension = "webmodeler";
+    preview = "webmodeler";
 }
 
 module.exports = {
