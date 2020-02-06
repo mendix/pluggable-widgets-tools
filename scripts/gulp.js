@@ -86,6 +86,10 @@ function runWebpack(config, cb) {
         if(!fs.existsSync(webmodelerFile)){
             config.splice(1, 1);
             console.log(`${COLOR.YELLOW}Preview file ${file} was not found. No preview will be available${END}`);
+        }else{
+            if(variables.preview === "webmodeler"){
+                console.log(`${COLOR.YELLOW}Preview file ${file} should be renamed to "${variables.package.widgetName}.${variables.preview}.${variables.extension}" to keep compatibility with future versions of Studio/Studio Pro${END}`);
+            }
         }
     }catch(err){
     }

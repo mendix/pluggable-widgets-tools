@@ -111,6 +111,8 @@ const previewConfig = {
 };
 
 const editorConfig = variables.editorConfig ? {
+    mode: "production",
+    devtool: false,
     entry: path.join(variables.path, `/src/${widgetName}.editorConfig.${variables.extension}`),
     output: {
         path: path.join(variables.path, "/dist/tmp"),
