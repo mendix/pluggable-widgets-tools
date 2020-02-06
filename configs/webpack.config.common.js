@@ -58,10 +58,6 @@ const widgetConfig = {
                 from: `${variables.path}/src/**/*.xml`,
                 toType: "template",
                 to: `widgets/[name].[ext]`
-            }, {
-                from: `${variables.path}/src/${widgetName}.editorConfig.js`,
-                toType: "template",
-                to: `widgets/[name].[ext]`
             }],
             { copyUnmodified: true }
         )
@@ -114,4 +110,45 @@ const previewConfig = {
     ]
 };
 
-module.exports = [widgetConfig, previewConfig];
+const editorConfig = variables.editorConfig ? {
+    entry: path.join(variables.path, `/src/${widgetName}.editorConfig.${variables.extension}`),
+    output: {
+        path: path.join(variables.path, "/dist/tmp"),
+        filename: `widgets/${widgetName}.editorConfig.js`,
+        libraryTarget: "commonjs"
+    },
+    resolve: {
+        extensions: [".ts", ".js", ".tsx", ".jsx"]
+    },
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                loader: "ts-loader",
+                options: {
+                    compilerOptions: {
+                        "module": "CommonJS",
+                    }
+                }
+            },
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        cacheDirectory: true,
+                        presets: ["@babel/preset-env", "@babel/preset-react"],
+                        plugins: [
+                            ["@babel/plugin-proposal-class-properties", { "loose": true }],
+                            ["@babel/plugin-transform-react-jsx", { "pragma": "createElement" }],
+                            "react-hot-loader/babel"
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+} : undefined;
+
+module.exports = [widgetConfig, previewConfig, editorConfig];

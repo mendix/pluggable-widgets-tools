@@ -13,6 +13,7 @@ const pkg = require(path.join(newPath, "package.json"));
 
 let extension = "tsx";
 let preview = "editorPreview";
+let editorConfig = true;
 
 try {
     if(!fs.existsSync(path.join(newPath, `/src/${pkg.widgetName}.${extension}`))){
@@ -30,9 +31,18 @@ try {
     preview = "webmodeler";
 }
 
+try {
+    if(!fs.existsSync(path.join(newPath, `/src/${pkg.widgetName}.editorConfig.${extension}`))){
+        editorConfig = false;
+    }
+} catch(err) {
+    editorConfig = false;
+}
+
 module.exports = {
     path: newPath,
     package: pkg,
     extension: extension,
-    preview: preview
+    preview: preview,
+    editorConfig: editorConfig
 };
