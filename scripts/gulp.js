@@ -81,7 +81,7 @@ function copyToDeployment() {
 
 function runWebpack(config, cb) {
     try{
-        const file = `src/${variables.package.widgetName}.webmodeler.${variables.extension}`;
+        const file = `src/${variables.package.widgetName}.${variables.preview}.${variables.extension}`;
         const webmodelerFile = path.join(variables.path, file);
         if(!fs.existsSync(webmodelerFile)){
             config.splice(1, 1);
