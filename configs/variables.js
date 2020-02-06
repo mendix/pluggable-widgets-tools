@@ -12,6 +12,7 @@ const newPath = path.join(__dirname, "../../../../", pathToJoin);
 const pkg = require(path.join(newPath, "package.json"));
 
 let extension = "tsx";
+let preview = "editorPreview";
 
 try {
     if(!fs.existsSync(path.join(newPath, `/src/${pkg.widgetName}.${extension}`))){
@@ -21,8 +22,17 @@ try {
     extension = "jsx";
 }
 
+try {
+    if(!fs.existsSync(path.join(newPath, `/src/${pkg.widgetName}.${preview}.${extension}`))){
+        extension = "webmodeler";
+    }
+} catch(err) {
+    extension = "webmodeler";
+}
+
 module.exports = {
     path: newPath,
     package: pkg,
-    extension: extension
+    extension: extension,
+    preview: preview
 };

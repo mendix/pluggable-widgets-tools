@@ -69,10 +69,10 @@ const widgetConfig = {
 };
 
 const previewConfig = {
-    entry: path.join(variables.path, `/src/${widgetName}.webmodeler.${variables.extension}`),
+    entry: path.join(variables.path, `/src/${widgetName}.${variables.preview}.${variables.extension}`),
     output: {
         path: path.join(variables.path, "/dist/tmp"),
-        filename: `widgets/${widgetName}.webmodeler.js`,
+        filename: `widgets/${widgetName}.editorPreview.js`,
         libraryTarget: "commonjs"
     },
     resolve: {
