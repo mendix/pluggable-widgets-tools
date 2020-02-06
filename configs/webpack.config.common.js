@@ -58,6 +58,10 @@ const widgetConfig = {
                 from: `${variables.path}/src/**/*.xml`,
                 toType: "template",
                 to: `widgets/[name].[ext]`
+            }, {
+                from: `${variables.path}/src/${widgetName}.editorConfig.js`,
+                toType: "template",
+                to: `widgets/[name].[ext]`
             }],
             { copyUnmodified: true }
         )
