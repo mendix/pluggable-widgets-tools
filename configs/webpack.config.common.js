@@ -151,6 +151,6 @@ const editorConfig = variables.editorConfig ? {
             }
         ]
     }
-} : undefined;
+} : {};
 
 module.exports = [widgetConfig, previewConfig, editorConfig];
