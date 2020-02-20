@@ -32,7 +32,7 @@ try {
 }
 
 try {
-    if(!fs.existsSync(path.join(newPath, `/src/${pkg.widgetName}.editorConfig.${extension}`))){
+    if(!fs.existsSync(path.join(newPath, `/src/${pkg.widgetName}.editorConfig.${extension === "jsx" ? "js" : "ts"}`))){
         editorConfig = false;
     }
 } catch(err) {
