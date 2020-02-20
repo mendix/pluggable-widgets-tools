@@ -98,19 +98,19 @@ const widgetConfig = {
 const editorConfig = variables.editorConfig ? {
     mode: "production",
     devtool: false,
-    entry: path.join(variables.path, `/src/${widgetName}.editorConfig.${variables.extension}`),
+    entry: path.join(variables.path, `/src/${widgetName}.editorConfig.${variables.extension === "jsx" ? "js" : "ts"}`),
     output: {
         path: path.join(variables.path, "/dist/tmp"),
         filename: `widgets/${widgetName}.editorConfig.js`,
         libraryTarget: "commonjs"
     },
     resolve: {
-        extensions: [".ts", ".js", ".tsx", ".jsx"]
+        extensions: [".ts", ".js"]
     },
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
+                test: /\.ts$/,
                 loader: "ts-loader",
                 options: {
                     compilerOptions: {
@@ -119,7 +119,7 @@ const editorConfig = variables.editorConfig ? {
                 }
             },
             {
-                test: /\.jsx?$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
@@ -128,8 +128,7 @@ const editorConfig = variables.editorConfig ? {
                         presets: ["@babel/preset-env", "@babel/preset-react"],
                         plugins: [
                             ["@babel/plugin-proposal-class-properties", { "loose": true }],
-                            ["@babel/plugin-transform-react-jsx", { "pragma": "createElement" }],
-                            "react-hot-loader/babel"
+                            ["@babel/plugin-transform-react-jsx", { "pragma": "createElement" }]
                         ]
                     }
                 }
