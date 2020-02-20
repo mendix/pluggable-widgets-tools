@@ -135,6 +135,12 @@ const editorConfig = variables.editorConfig ? {
             }
         ]
     }
-} : {};
+} : undefined;
 
-module.exports = [widgetConfig, editorConfig];
+const configurations = [widgetConfig];
+
+if (editorConfig) {
+    configurations.push(editorConfig);
+}
+
+module.exports = configurations;

@@ -83,6 +83,10 @@ const previewDevConfig = {
     }
 };
 
-const editorConfig = commonConfig.length === 3 ? commonConfig[2] : {};
+const configurations = [merge(commonConfig[0], devConfig), merge(commonConfig[1], previewDevConfig)];
 
-module.exports = [ merge(commonConfig[0], devConfig), merge(commonConfig[1], previewDevConfig), editorConfig ];
+if (commonConfig.length === 3) {
+    configurations.push(commonConfig[2])
+}
+
+module.exports = configurations;
