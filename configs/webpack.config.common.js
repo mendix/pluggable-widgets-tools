@@ -110,46 +110,50 @@ const previewConfig = {
     ]
 };
 
-const editorConfig = variables.editorConfig ? {
-    mode: "production",
-    devtool: false,
-    entry: path.join(variables.path, `/src/${widgetName}.editorConfig.${variables.extension === "jsx" ? "js" : "ts"}`),
-    output: {
-        path: path.join(variables.path, "/dist/tmp"),
-        filename: `widgets/${widgetName}.editorConfig.js`,
-        libraryTarget: "commonjs"
-    },
-    resolve: {
-        extensions: [".ts", ".js"]
-    },
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                loader: "ts-loader",
-                options: {
-                    compilerOptions: {
-                        "module": "CommonJS",
-                    }
-                }
-            },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        cacheDirectory: true,
-                        presets: ["@babel/preset-env", "@babel/preset-react"],
-                        plugins: [
-                            ["@babel/plugin-proposal-class-properties", { "loose": true }],
-                            ["@babel/plugin-transform-react-jsx", { "pragma": "createElement" }]
-                        ]
-                    }
-                }
-            }
-        ]
-    }
-} : {};
+const configurations = [widgetConfig, previewConfig];
 
-module.exports = [widgetConfig, previewConfig, editorConfig];
+if (variables.editorConfig) {
+    configurations.push({
+        mode: "production",
+        devtool: false,
+        entry: path.join(variables.path, `/src/${widgetName}.editorConfig.${variables.extension === "jsx" ? "js" : "ts"}`),
+        output: {
+            path: path.join(variables.path, "/dist/tmp"),
+            filename: `widgets/${widgetName}.editorConfig.js`,
+            libraryTarget: "commonjs"
+        },
+        resolve: {
+            extensions: [".ts", ".js"]
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.ts$/,
+                    loader: "ts-loader",
+                    options: {
+                        compilerOptions: {
+                            "module": "CommonJS",
+                        }
+                    }
+                },
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            cacheDirectory: true,
+                            presets: ["@babel/preset-env", "@babel/preset-react"],
+                            plugins: [
+                                ["@babel/plugin-proposal-class-properties", { "loose": true }],
+                                ["@babel/plugin-transform-react-jsx", { "pragma": "createElement" }]
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    });
+}
+
+module.exports = configurations;
