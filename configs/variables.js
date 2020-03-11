@@ -42,7 +42,7 @@ try {
 module.exports = {
     path: newPath,
     package: pkg,
-    extension: extension,
-    preview: preview,
-    editorConfig: editorConfig
+    extension,
+    preview,
+    editorConfig
 };
