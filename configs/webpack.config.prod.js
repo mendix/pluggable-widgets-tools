@@ -11,7 +11,7 @@ const name = widgetName.toLowerCase();
 
 const prodConfig = {
     mode: "production",
-    devtool: "source-map",
+    devtool: false,
     plugins: [
         new ExtractTextPlugin({
             filename: `./widgets/${packagePath}/${name}/ui/${widgetName}.css`
