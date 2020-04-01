@@ -14,7 +14,6 @@ const nativeConfig = {
     },
     haste: {
         defaultPlatform: "android",
-        hasteImplModulePath: "<rootDir>/node_modules/react-native/jest/hasteImpl.js",
         platforms: [
             "android",
             "ios",
