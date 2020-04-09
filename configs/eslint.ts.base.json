@@ -159,6 +159,7 @@
       "webpack.config.prod.js",
       "prettier.config.js",
       "*.webmodeler.*",
+      "*.editorPreview.*",
       ".eslintrc.js",
       "wdio.conf.js"
     ],
